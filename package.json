@@ -1,0 +1,42 @@
+{
+  "name": "raconteur-scribe",
+  "version": "1.0.0",
+  "description": "The Scribe is a tool for converting content (think markdown / post format) into a more reusable object format which can resolve itself to HTML, but one which also has easy-to-create metadata.",
+  "main": "scribe.js",
+  "scripts": {
+    "build": "npm run clean && npm run create && npm run convert",
+    "clean": "npm run clean-build && npm run clean-public && npm run clean-test",
+    "clean-build": "rm -rf ./lib",
+    "clean-public": "rm -rf ./public",
+    "clean-test": "rm ./test/*.js",
+    "create": "npm run create-lib",
+    "create-lib": "(mkdir ./lib || true)",
+    "convert": "npm run convert-test && npm run convert-coffee",
+    "convert-test": "./node_modules/.bin/coffee --compile --bare --output ./test/ src/coffee/test",
+    "convert-coffee": "./node_modules/.bin/coffee --compile --output ./lib/ src/coffee",
+    "test": "npm run build && mocha --reporter spec --timeout 20000",
+    "prepublish": "npm run build"
+  },
+  "keywords": [
+    "scribe",
+    "post",
+    "blog",
+    "message",
+    "formatter"
+  ],
+  "author": "Brekk Bockrath",
+  "license": "ISC",
+  "dependencies": {
+    "json-front-matter": "~1.0.0",
+    "marked": "~0.3.3",
+    "promised-io": "~0.3.5",
+    "parkplace": "~0.1.0",
+    "lodash": "~3.6.0",
+    "coffee-script": "~1.9.1"
+  },
+  "devDependencies": {
+    "should": "~5.2.0",
+    "mocha": "~2.2.1",
+    "chalk": "~1.0.0"
+  }
+}
