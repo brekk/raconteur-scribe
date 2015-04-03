@@ -6,9 +6,9 @@
   "scripts": {
     "build": "npm run clean && npm run create && npm run convert",
     "clean": "npm run clean-build && npm run clean-public && npm run clean-test",
-    "clean-build": "rm -rf ./lib",
-    "clean-public": "rm -rf ./public",
-    "clean-test": "rm ./test/*.js",
+    "clean-build": "(rm -rf ./lib || true)",
+    "clean-public": "(rm -rf ./public || true)",
+    "clean-test": "(rm ./test/*.js || true)",
     "create": "npm run create-lib",
     "create-lib": "(mkdir ./lib || true)",
     "convert": "npm run convert-test && npm run convert-coffee",
@@ -27,12 +27,13 @@
   "author": "Brekk Bockrath",
   "license": "ISC",
   "dependencies": {
+    "coffee-script": "~1.9.1",
+    "debug": "^2.1.3",
     "json-front-matter": "~1.0.0",
-    "marked": "~0.3.3",
-    "promised-io": "~0.3.5",
-    "parkplace": "~0.1.0",
     "lodash": "~3.6.0",
-    "coffee-script": "~1.9.1"
+    "marked": "~0.3.3",
+    "parkplace": "~0.1.0",
+    "promised-io": "~0.3.5"
   },
   "devDependencies": {
     "should": "~5.2.0",
