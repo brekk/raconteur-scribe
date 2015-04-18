@@ -80,7 +80,7 @@ ___.open 'readRaw', (raw, cb)->
 
 ___.open 'readFile', (file, cb)->
     try
-        self = @
+        self = Scribe
         if !cb? or !_.isFunction cb
             throw new TypeError "Expected callback to be a function."
         debug "Parsing data from a file: %s", file
@@ -91,7 +91,7 @@ ___.open 'readFile', (file, cb)->
             debug "Successfully parsed."
             self.handleFrontMatter frontdata, cb
             return
-        return @
+        return Scribe
     catch e
         debug "Error during readFile: %s", e.toString()
         if e.stack?
@@ -101,7 +101,8 @@ ___.open 'readFile', (file, cb)->
 
 ___.open 'readRawAsPromise', (raw)->
     d = new Deferred()
-    @readRaw raw, (err, data)->
+    self = Scribe
+    self.readRaw raw, (err, data)->
         if err?
             debug "Error during readRawAsPromise: %s", err.toString()
             d.reject err
@@ -111,7 +112,8 @@ ___.open 'readRawAsPromise', (raw)->
 
 ___.open 'readFileAsPromise', (file)->
     d = new Deferred()
-    @readFile file, (err, data)->
+    self = Scribe
+    self.readFile file, (err, data)->
         if err?
             debug "Error during readFileAsPromise: %s", err.toString()
             d.reject err
