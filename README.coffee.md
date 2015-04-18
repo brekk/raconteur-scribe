@@ -1,6 +1,8 @@
 # raconteur-scribe
 
-The Scribe is tied of the [raconteur][] module, which offers additional functionality (such as easy template management and a clean programmatic interface) but you can use this module independently as well.
+The scribe is tied of the [raconteur][] module, which offers additional functionality (such as easy template management and a clean programmatic interface) but you can use this module independently as well.
+
+[raconteur]: https://www.npmjs.com/package/raconteur "The raconteur module"
 
 ## Installation
 
@@ -10,9 +12,9 @@ The Scribe is tied of the [raconteur][] module, which offers additional function
 
     scribe = require 'raconteur-scribe'
 
-### Scribe
+### scribe
 
-The Scribe is a tool for converting content (think markdown / post format) into a more reusable object format which can resolve itself to HTML, but one which also has easy-to-create metadata.
+The scribe is a tool for converting content (think markdown / post format) into a more reusable object format which can resolve itself to HTML, but one which also has easy-to-create metadata.
 
 In addition to the standard markdown you probably know and love, because we're using the `marked` library internally, you can modify and extend the existing renderer. (See [below][custom-renderer] for more details.)
 
@@ -37,7 +39,7 @@ Here's an example post, using a combination of json-front-matter and markdown:
 
 We can easily reference any of those properties in our template later using Crier module, but more on that shortly.
 
-Here's an example of using the Scribe module.
+Here's an example of using the scribe module.
 
     scribe = require('raconteur').scribe
     file = "./example-post.md"
@@ -81,4 +83,4 @@ Finally, we can use the promise-based version of either of those methods, `scrib
 
 ##### Rendering with a custom markdown renderer
 
-If you have a custom renderer (an instance of the `marked.renderer`), you can set it on a Scribe using `scribe.setRenderer(customRendererInstance)`.
+If you have a custom renderer (an instance of the `marked.renderer`), you can set it on a scribe using `scribe.setRenderer(customRendererInstance)`.
