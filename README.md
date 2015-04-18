@@ -10,7 +10,7 @@ The scribe is tied of the [raconteur][] module, which offers additional function
 
 ## Invocation
 
-    scribe = require 'raconteur-scribe'
+    var scribe = require('raconteur-scribe');
 
 ### scribe
 
