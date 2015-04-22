@@ -1,6 +1,6 @@
 {
   "name": "raconteur-scribe",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "The Scribe is a tool for converting content (think markdown / post format) into a more reusable object format which can resolve itself to HTML, but one which also has easy-to-create metadata.",
   "main": "scribe.js",
   "scripts": {
@@ -33,11 +33,19 @@
     "lodash": "~3.6.0",
     "marked": "~0.3.3",
     "parkplace": "~0.1.0",
-    "promised-io": "~0.3.5"
+    "promised-io": "~0.3.5",
+    "yaml-front-matter": "^3.2.3"
   },
   "devDependencies": {
     "should": "~5.2.0",
     "mocha": "~2.2.1",
     "chalk": "~1.0.0"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@brekkhub:brekk/raconteur-scribe.git"
   }
 }

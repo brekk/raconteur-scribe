@@ -15,6 +15,9 @@ path = require 'path'
                 return fixture.tests[method]
             console.log chalk.red "No fixture for #{method} found, are you sure you added it to fixtures/scribe.json file?"
             return null
+        reset = ()->
+            scribe.json()
+        beforeEach reset
         describe 'Scribe', ()->
 
             describe '.readFile', ()->
@@ -51,6 +54,17 @@ path = require 'path'
             describe '.readRaw', ()->
                 it 'should read raw content and return a parsed object', (done)->
                     list = harness 'readRaw'
+                    finish = _.after list.length, done
+                    _.each list, (content)->
+                        $.readRaw content, (e, o)->
+                            o.should.be.ok
+                            o.attributes.should.be.ok
+                            o.content.should.be.ok
+                            finish()
+
+                it 'should read yaml content and return a parsed object', (done)->
+                    list = harness 'readYaml'
+                    $.yaml()
                     finish = _.after list.length, done
                     _.each list, (content)->
                         $.readRaw content, (e, o)->

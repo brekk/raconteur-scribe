@@ -11,6 +11,9 @@
         ],
         "readRaw": [
             "{{{\n\t\"title\":\"some shia\",\n\t\"preview\":\"something\"\n}}}\nsome content"
+        ],
+        "readYaml": [
+            "---\ntitle: some shia\npreview: something\n---some yaml-faced content"
         ]
     }
 }
