@@ -123,7 +123,10 @@ ___.readable 'readRaw', (raw, cb)->
         debug "Parsing data from raw string."
         parser = jsonmatter.parse
         if @_yaml
-            parser = yamlmatter
+            yamlRegex = /^-{3}/
+            if Scribe._state.yaml and yamlRegex.test raw
+                parser = (input)->
+                    return self.eatYamlContent yamlmatter input
         parsed = parser raw
         if @_yaml and parsed?.__content?
             debug "using yaml!"
@@ -136,11 +139,6 @@ ___.readable 'readRaw', (raw, cb)->
                 if key isnt '__content'
                     out.attributes[key] = val
             parsed = out
-        yamlRegex = /^-{3}/
-        if Scribe._state.yaml and yamlRegex.test raw
-            parser = (input)->
-                return self.eatYamlContent yamlmatter input
-        parsed = parser raw
         if parsed?
             debug "Successfully parsed.", parsed
             self.handleFrontMatter parsed, cb
