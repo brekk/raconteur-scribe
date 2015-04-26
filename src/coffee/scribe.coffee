@@ -1,13 +1,13 @@
+"use strict"
 _ = require 'lodash'
+debug = require('debug') 'raconteur:scribe'
 promise = require 'promised-io/promise'
 pfs = require 'promised-io/fs'
 Deferred = promise.Deferred
-marked = require './renderer'
+marker = (require 'markdown-it')('commonmark')
 jsonmatter = require 'json-front-matter'
 yamlmatter = require('yaml-front-matter').loadFront
-
 module.exports = Scribe = {}
-debug = require('debug') 'raconteur:scribe'
 
 ___ = require('parkplace').scope Scribe
 
@@ -42,7 +42,7 @@ ___.readable 'json', ()->
     @_json = true
     return Scribe
 
-___.secret '_renderer', marked
+___.secret '_renderer', _.bind marker.render, marker
 
 ___.guarded 'setRenderer', (renderer)->
     if renderer? and _.isFunction renderer
@@ -52,6 +52,11 @@ ___.guarded 'setRenderer', (renderer)->
 
 ___.guarded 'getRenderer', ()->
     return @_renderer
+
+___.readable 'renderer', {
+    get: Scribe.getRenderer
+    set: Scribe.setRenderer
+}, true
 
 ___.guarded 'handleFrontMatter', (frontdata, cb)->
     try
@@ -63,8 +68,7 @@ ___.guarded 'handleFrontMatter', (frontdata, cb)->
             callbackable = cb? and _.isFunction cb
             if frontdata.body? and frontdata.attributes?
                 {body, attributes} = frontdata
-                renderer = @getRenderer()
-                output = renderer body
+                output = @renderer body
                 if output?
                     post = {
                         attributes: attributes
