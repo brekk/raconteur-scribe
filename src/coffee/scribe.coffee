@@ -42,20 +42,26 @@ ___.readable 'json', ()->
     @_json = true
     return Scribe
 
-___.secret '_renderer', _.bind marker.render, marker
-
-___.guarded 'setRenderer', (renderer)->
-    if renderer? and _.isFunction renderer
-        debug 'Setting custom renderer function'
-        @_renderer = renderer
-    return @
-
-___.guarded 'getRenderer', ()->
-    return @_renderer
+___.guarded '_renderer', marker
 
 ___.readable 'renderer', {
-    get: Scribe.getRenderer
-    set: Scribe.setRenderer
+    get: ()->
+        return @_renderer
+    set: (x)->
+        @_renderer = x
+}, true
+
+___.secret '_render', _.bind marker.render, marker
+
+___.readable 'render', {
+    get: ()->
+        return @_render
+    set: (render)->
+        if !_.isFunction render
+            throw new TypeError "Expected render to be a function."
+        debug 'Setting custom render function'
+        @_render = render
+        return @
 }, true
 
 ___.guarded 'handleFrontMatter', (frontdata, cb)->
@@ -68,7 +74,7 @@ ___.guarded 'handleFrontMatter', (frontdata, cb)->
             callbackable = cb? and _.isFunction cb
             if frontdata.body? and frontdata.attributes?
                 {body, attributes} = frontdata
-                output = @renderer body
+                output = @render body
                 if output?
                     post = {
                         attributes: attributes

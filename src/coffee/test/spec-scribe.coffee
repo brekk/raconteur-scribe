@@ -6,6 +6,8 @@ scribe = require cwd + '/lib/scribe'
 fixture = require cwd + '/test/fixtures/scribe.json'
 chalk = require 'chalk'
 path = require 'path'
+checkbox = require 'markdown-it-checkbox'
+cheerio = require 'cheerio'
 
 (($)->
     "use strict"
@@ -87,7 +89,52 @@ path = require 'path'
                             console.log "There was an error during readRawAsPromise", e
                             if e.stack?
                                 console.log e.stack
-        return                   
+
+            describe '.renderer', ()->
+
+                it "should allow for adding plugins to the render function", ()->
+                    $.renderer.should.have.property 'use'
+                    $.renderer.use.should.be.ok
+
+            describe ".render", ()->
+
+                it 'should throw an error when attempting to set render to a non-function', ()->
+                    (->
+                        $.render = false
+                    ).should.throwError
+                    (->
+                        $.render = {}
+                    ).should.throwError
+
+                it 'should be able to use a different render function when rendering', (done)->
+                    list = harness 'readFile'
+                    finish = _.after (list.length + 1), done
+                    oneCall = _.once finish
+                    clone = _.wrap $.render, (fx)->
+                        outcome = fx.apply $, _.rest arguments
+                        oneCall()
+                        return outcome
+                    $.render = clone
+                    _.each list, (file)->
+                        adjustedPath = path.resolve __dirname, file
+                        $.readFile adjustedPath, (e, o)->
+                                o.should.be.ok
+                                o.attributes.should.be.ok
+                                o.content.should.be.ok
+                                finish()
+                                return
+                        return
+                
+                it 'should be able to use plugins added via .renderer.use', ()->
+                    $.renderer.use checkbox
+                    num = Math.round Math.random() * 4e3
+                    $dom = cheerio.load $.render("[ ] #{num}")
+                    $input = $dom('input')
+                    $input.length.should.not.equal 0
+                    $dom.html().should.equal """<p><input type="checkbox" id="checkbox0"><label for="checkbox0">#{num}</label></p>\n"""
+
+
+        return
     catch e
         console.warn "Error during Scribe testing: ", e
         if e.stack?
