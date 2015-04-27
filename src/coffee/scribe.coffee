@@ -49,9 +49,11 @@ ___.readable 'renderer', {
         return @_renderer
     set: (x)->
         @_renderer = x
+        if renderer?.render?
+            @render = renderer.render
 }, true
 
-___.secret '_render', _.bind marker.render, marker
+___.guarded '_render', _.bind marker.render, marker
 
 ___.readable 'render', {
     get: ()->

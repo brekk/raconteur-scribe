@@ -1,6 +1,6 @@
 # raconteur-scribe
 
-The scribe is tied of the [raconteur][] module, which offers additional functionality (such as easy template management and a clean programmatic interface) but you can use this module independently as well.
+The scribe is tied to the [raconteur][] module, which offers additional functionality (such as easy template management and a clean programmatic interface) but you can use this module independently as well.
 
 [raconteur]: https://www.npmjs.com/package/raconteur "The raconteur module"
 
@@ -22,7 +22,7 @@ In addition to the standard markdown you probably know and love, because we're u
 
 #### Metadata
 
-We're using the `json-front-matter` library under the hood, and that allows us to quickly add custom metadata to any content.
+We're using the `yaml-front-matter` and `json-front-matter` libraries under the hood, and that allows us to quickly add custom metadata to any content.
 
 Here's an example post, using a combination of json-front-matter and markdown:
 
@@ -34,6 +34,17 @@ Here's an example post, using a combination of json-front-matter and markdown:
         "date": "1-20-2015",
         "author": "brekk"
     }}}
+    # Learning 
+    Lorem ipsum dolor sit amet adipiscine elit.
+
+**yaml-example-post.md**
+
+    ---
+    title: The Title
+    tags: [a, b, c]
+    date: 1-20-2015
+    author: brekk
+    ---
     # Learning 
     Lorem ipsum dolor sit amet adipiscine elit.
 
