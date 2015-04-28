@@ -53,7 +53,7 @@ ___.readable 'renderer', {
             @render = renderer.render
 }, true
 
-___.guarded '_render', _.bind marker.render, marker
+___.writable '_render', _.bind marker.render, marker
 
 ___.readable 'render', {
     get: ()->
@@ -134,11 +134,10 @@ ___.readable 'readRaw', (raw, cb)->
             return
         debug "Parsing data from raw string."
         parser = jsonmatter.parse
-        if @_yaml
-            yamlRegex = /^-{3}/
-            if Scribe._state.yaml and yamlRegex.test raw
-                parser = (input)->
-                    return self.eatYamlContent yamlmatter input
+        yamlRegex = /^-{3}/
+        if yamlRegex.test raw
+            parser = (input)->
+                return self.eatYamlContent yamlmatter input
         parsed = parser raw
         if @_yaml and parsed?.__content?
             debug "using yaml!"
