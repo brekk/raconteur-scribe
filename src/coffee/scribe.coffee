@@ -42,7 +42,7 @@ ___.readable 'json', ()->
     @_json = true
     return Scribe
 
-___.guarded '_renderer', marker
+___.writable '_renderer', marker
 
 ___.readable 'renderer', {
     get: ()->

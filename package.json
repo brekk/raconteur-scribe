@@ -1,6 +1,6 @@
 {
   "name": "raconteur-scribe",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "The Scribe is a tool for converting content (think markdown / post format) into a more reusable object format which can resolve itself to HTML, but one which also has easy-to-create metadata.",
   "main": "scribe.js",
   "scripts": {
